@@ -1,27 +1,40 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const NavBar = () => {
 	const [isOpen, setIsOpen] = useState(false);
+  const {user, logOut} = useContext(AuthContext)
+
+  const handleLogOut = () => {
+    logOut()
+    .then(() => {})
+    .catch(error => console.log(error))
+  }
 
 	const toggleMenu = () => setIsOpen(!isOpen);
 	const navItem = (
 		<>
 		  <li>
-			<Link to='/' className="text-red-600 font-extrabold hover:text-white border-2 mr-5 hover:bg-red-600 mt-3 lg:mt-0">Home</Link>
+			<Link to='/' className="text-red-600 font-bold hover:text-white border-2 mr-5 hover:bg-red-600 mt-3 lg:mt-0">Home</Link>
 		  </li>
 		  <li>
-			<Link to='/profile' className="text-red-600 font-extrabold hover:text-white border-2 mr-5 hover:bg-red-600 mt-3 lg:mt-0">Profile</Link>
+			<Link to='/dashboard/submitTicket' className="text-red-600 font-bold hover:text-white border-2 mr-5 hover:bg-red-600 mt-3 lg:mt-0">Submit a Ticket</Link>
 		  </li>
 		  <li>
+			<Link to='/dashboard' className="text-red-600 font-extrabold hover:text-white border-2 mr-5 hover:bg-red-600 mt-3 lg:mt-0">Dashboard</Link>
+		  </li>
+      {
+        user ? <><li onClick={handleLogOut} className="text-red-600 font-bold hover:text-white border-2 mr-5 hover:bg-red-600 mt-3 mb-3 lg:mt-0 px-4 py-2 cursor-pointer rounded-lg">
+         Logout
+        </li></> : <><li>
 			<Link to='/login' className="text-red-600 font-bold hover:text-white border-2 mr-5 hover:bg-red-600 mt-3 lg:mt-0">Login</Link>
 		  </li>
 		  <li>
 			<Link to='/register' className="text-red-600 font-bold hover:text-white border-2 mr-5 hover:bg-red-600 mt-3 lg:mt-0">Register</Link>
-		  </li>
-		  <li>
-			<Link className="text-red-600 font-bold hover:text-white border-2 mr-5 hover:bg-red-600 mt-3 mb-3 lg:mt-0">Logout</Link>
-		  </li>
+		  </li></>
+      }
+
 		</>
 	  );
 
