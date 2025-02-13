@@ -109,7 +109,7 @@ const ManageClasses = () => {
         <th>Description</th>
         <th>Email</th>
         <th>Status</th>
-        <th>Feedback</th>
+        <th>Reply</th>
       </tr>
     </thead>
 
